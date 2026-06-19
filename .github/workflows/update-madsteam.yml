@@ -1,0 +1,39 @@
+name: Actualizar MADSTEAM
+
+on:
+  schedule:
+    # Corre todos los días a las 09:00 hora Argentina (12:00 UTC)
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+    # Permite correrlo manualmente desde la pestaña "Actions" de GitHub
+
+jobs:
+  actualizar-sitio:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: pip install requests
+
+      - name: Correr el script de actualización
+        env:
+          ITAD_API_KEY: ${{ secrets.ITAD_API_KEY }}
+          STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+        run: |
+          cd bot
+          python update_site.py
+
+      - name: Subir los cambios al repositorio
+        run: |
+          git config --global user.name "MADSTEAM Bot"
+          git config --global user.email "actions@github.com"
+          git add *.html
+          git diff --staged --quiet && echo "Sin cambios" || git commit -m "Actualización automática diaria"
+          git push
