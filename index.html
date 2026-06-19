@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ofertas — Centro de Comando Steam</title>
+<title>Ofertas — MADSTEAM</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -54,134 +54,93 @@
 <header class="section-header">
   <span class="eyebrow">Zona 01 / Catálogo completo</span>
   <h1>Ofertas Generales</h1>
-  <p>Todos los descuentos activos del día, ordenados por relevancia. Pasá el mouse sobre cualquier juego para ver detalles y precio.</p>
+  <p>Juegos de buena reputación con descuento activo. Pasá el mouse para ver detalles y precio.</p>
 </header>
 
 <main class="game-grid" id="grid"></main>
-
-<footer class="footer">
-  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal
-</footer>
-
 <script>
-// ===== DATOS DE EJEMPLO — esto lo va a generar el script automático =====
 const games = [
   {
-    title: "Hades II",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145360/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg",
-    desc: "La secuela del aclamado roguelike. Encarná a Melinoë, princesa del inframundo, en su misión por derrotar al Titán del Tiempo.",
-    tags: ["Roguelike", "Acción", "Mitología"],
-    priceOld: 24.99,
-    priceNew: 19.99,
-    discount: -20,
-    historic: false,
-    url: "https://store.steampowered.com/app/1145360"
+    "appid": 1180660,
+    "title": "Tell Me Why",
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1180660/library_600x900.jpg",
+    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1180660/header.jpg?t=1780349055",
+    "desc": "Tell Me Why is the multi-award winning episodic adventure game from Dontnod Entertainment in which twins use their supernatural bond to discover the truth of their troubled past.",
+    "tags": [
+      "Aventura",
+      "Free to Play"
+    ],
+    "priceOld": 19.99,
+    "priceNew": 0,
+    "discount": -100,
+    "historic": false,
+    "url": "https://itad.link/019e8518-404a-709b-ae47-a4ef949552ea/"
   },
   {
-    title: "Cuphead",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/header.jpg",
-    desc: "Run and gun clásico con una estética inspirada en las caricaturas de los años 30. Difícil, hermoso, despiadado.",
-    tags: ["Plataformas", "Difícil", "Arte clásico"],
-    priceOld: 19.99,
-    priceNew: 5.99,
-    discount: -70,
-    historic: true,
-    url: "https://store.steampowered.com/app/268910"
-  },
-  {
-    title: "Stardew Valley",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg",
-    desc: "Heredaste la vieja granja de tu abuelo. Cultivá, pescá, hacé minería y construí una vida en Pelican Town.",
-    tags: ["Granja", "Simulación", "Relax"],
-    priceOld: 14.99,
-    priceNew: 7.49,
-    discount: -50,
-    historic: false,
-    url: "https://store.steampowered.com/app/413150"
-  },
-  {
-    title: "DOOM Eternal",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/782330/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/782330/header.jpg",
-    desc: "El Doom Slayer regresa para enfrentar a las fuerzas del infierno en la Tierra. Acción brutal, rápida y sin pausas.",
-    tags: ["FPS", "Acción", "Demonios"],
-    priceOld: 39.99,
-    priceNew: 9.99,
-    discount: -75,
-    historic: true,
-    url: "https://store.steampowered.com/app/782330"
-  },
-  {
-    title: "Red Dead Redemption 2",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg",
-    desc: "América, 1899. Arthur Morgan y la banda Van der Linde luchan por sobrevivir mientras el viejo oeste desaparece.",
-    tags: ["Mundo abierto", "Western", "Narrativa"],
-    priceOld: 59.99,
-    priceNew: 17.99,
-    discount: -70,
-    historic: false,
-    url: "https://store.steampowered.com/app/1174180"
-  },
-  {
-    title: "Dispatch",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2592160/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2592160/header.jpg",
-    desc: "Manejá un equipo de superhéroes de medio pelo desde un centro de despacho. Decisiones, caos y comedia.",
-    tags: ["Narrativo", "Estrategia", "Comedia"],
-    priceOld: 19.99,
-    priceNew: 19.99,
-    discount: 0,
-    historic: false,
-    url: "https://store.steampowered.com/app/2592160"
+    "appid": 1238840,
+    "title": "Battlefield™ 1",
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1238840/library_600x900.jpg",
+    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1238840/header.jpg?t=1777324289",
+    "desc": "Únete a la comunidad de Battlefield y vive la guerra total a través de épicas batallas multijugador por equipos o de las fascinantes historias de guerra de la campaña.",
+    "tags": [
+      "Acción",
+      "Multijugador masivo"
+    ],
+    "priceOld": 39.99,
+    "priceNew": 1.99,
+    "discount": -95,
+    "historic": false,
+    "url": "https://itad.link/018d9386-2e92-70eb-ae13-61d0383aa841/"
   }
 ];
 
-const grid = document.getElementById('grid');
+function renderGrid_games() {
+  const grid = document.getElementById('grid');
+  games.forEach(g => {
+    const card = document.createElement('a');
+    card.className = 'game-card-link';
+    card.href = g.url;
+    card.target = '_blank';
+    card.rel = 'noopener';
 
-games.forEach(g => {
-  const card = document.createElement('a');
-  card.className = 'game-card-link';
-  card.href = g.url;
-  card.target = '_blank';
-  card.rel = 'noopener';
+    const discountBadge = g.discount < 0
+      ? `<span class="card-discount-badge">${g.discount}%</span>` : '';
+    const historicBadge = g.historic
+      ? `<span class="card-historic-badge">Mínimo histórico</span>` : '';
+    const priceBlock = (g.discount < 0 && g.priceOld)
+      ? `<span class="price-old">$${g.priceOld.toFixed(2)}</span><span class="price-new">$${g.priceNew.toFixed(2)}</span>`
+      : `<span class="price-new">$${(g.priceNew || 0).toFixed(2)}</span>`;
 
-  const discountBadge = g.discount < 0
-    ? `<span class="card-discount-badge">${g.discount}%</span>` : '';
-  const historicBadge = g.historic
-    ? `<span class="card-historic-badge">Mínimo histórico</span>` : '';
-
-  const priceBlock = g.discount < 0
-    ? `<span class="price-old">$${g.priceOld.toFixed(2)}</span><span class="price-new">$${g.priceNew.toFixed(2)}</span>`
-    : `<span class="price-new">$${g.priceNew.toFixed(2)}</span>`;
-
-  card.innerHTML = `
-    <div class="game-card">
-      <div class="card-inner">
-        ${discountBadge}
-        ${historicBadge}
-        <img class="card-cover" src="${g.cover}" alt="${g.title}" loading="lazy">
-        <div class="card-title-bar"><h3>${g.title}</h3></div>
-      </div>
-      <div class="expand-panel">
-        <div class="expand-panel-inner">
-          <img class="expand-header-img" src="${g.header}" alt="${g.title}">
-          <p class="expand-desc">${g.desc}</p>
-          <div class="expand-tags">${g.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-          <div class="price-row">
-            <div class="price-info">${priceBlock}</div>
-            <span class="btn-steam">Ver en Steam</span>
+    card.innerHTML = `
+      <div class="game-card">
+        <div class="card-inner">
+          ${discountBadge}
+          ${historicBadge}
+          <img class="card-cover" src="${g.cover}" alt="${g.title}" loading="lazy">
+          <div class="card-title-bar"><h3>${g.title}</h3></div>
+        </div>
+        <div class="expand-panel">
+          <div class="expand-panel-inner">
+            <img class="expand-header-img" src="${g.header}" alt="${g.title}">
+            <p class="expand-desc">${g.desc}</p>
+            <div class="expand-tags">${g.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+            <div class="price-row">
+              <div class="price-info">${priceBlock}</div>
+              <span class="btn-steam">Ver en Steam</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  `;
-  grid.appendChild(card);
-});
+    `;
+    grid.appendChild(card);
+  });
+}
+renderGrid_games();
 </script>
+
+<footer class="footer">
+  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal — última actualización 19.06.2026
+</footer>
 
 </body>
 </html>

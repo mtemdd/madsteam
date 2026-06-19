@@ -12,7 +12,7 @@
   <a href="index.html" class="brand"><span class="mad">MAD</span><span class="steam">STEAM</span></a>
   <ul class="nav-links">
     <li class="nav-item">
-      <a href="index.html" class="">Ofertas <span class="nav-caret">▾</span></a>
+      <a href="index.html" class="active">Ofertas <span class="nav-caret">▾</span></a>
       <div class="nav-dropdown">
         <div class="nav-dropdown-inner">
         <a href="index.html">Descuentos generales</a>
@@ -54,73 +54,95 @@
 <header class="section-header">
   <span class="eyebrow">Zona 01c / Radar de lanzamientos</span>
   <h1>Próximas Joyitas</h1>
-  <p>Títulos por salir o recién salidos que pintan muy bien — para sumar a la wishlist antes de que suban de precio en ofertas futuras.</p>
+  <p>Títulos recientes con muy buenas reseñas, con o sin descuento.</p>
 </header>
 
 <main class="game-grid" id="grid"></main>
-
-<footer class="footer">
-  Datos actualizados automáticamente — fuente: Steam &amp; reseñas de la comunidad
-</footer>
-
 <script>
-// ===== DATOS DE EJEMPLO — esto lo va a generar el script automático =====
 const games = [
   {
-    title: "Hollow Knight: Silksong",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1030300/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1030300/header.jpg",
-    desc: "La secuela más esperada del metroidvania de Team Cherry. Hornet como protagonista, mundo nuevo de punta a punta.",
-    tags: ["Metroidvania", "Muy esperado"],
-    priceNew: 19.99,
-    discount: 0,
-    historic: false,
-    url: "https://store.steampowered.com/app/1030300"
+    "appid": 2592160,
+    "title": "Dispatch",
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2592160/library_600x900.jpg",
+    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2592160/header.jpg?t=1779899220",
+    "desc": "Dispatch es una comedia de oficina sobre superhéroes donde las decisiones importan. Gestiona un equipo de héroes inadaptados y decide quién enviar a las emergencias por la ciudad todo mientras equilibras la política de oficina, las relaciones personales y tu propia misión de convertirte en un héroe.",
+    "tags": [
+      "Acción",
+      "Aventura",
+      "Casual"
+    ],
+    "priceOld": 29.99,
+    "priceNew": 23.99,
+    "discount": -20,
+    "historic": false,
+    "url": "https://store.steampowered.com/app/2592160"
   },
   {
-    title: "Dispatch",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2592160/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2592160/header.jpg",
-    desc: "Recién salido y con reseñas abrumadoramente positivas. Comedia de superhéroes con decisiones que importan.",
-    tags: ["Recién salido", "96% positivas"],
-    priceNew: 19.99,
-    discount: 0,
-    historic: false,
-    url: "https://store.steampowered.com/app/2592160"
+    "appid": 1030300,
+    "title": "Hollow Knight: Silksong",
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1030300/library_600x900.jpg",
+    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1030300/7983574d464e6559ac7e24275727f73a8bcca1f3/header.jpg?t=1776125736",
+    "desc": "¡Descubre un vasto reino embrujado en Hollow Knight: Silksong! Explora, lucha y sobrevive mientras asciendes a la cima de un vasto reino gobernado por la seda y el canto.",
+    "tags": [
+      "Acción",
+      "Aventura",
+      "Indie"
+    ],
+    "priceOld": 19.99,
+    "priceNew": 14.99,
+    "discount": -25,
+    "historic": false,
+    "url": "https://store.steampowered.com/app/1030300"
   }
 ];
 
-const grid = document.getElementById('grid');
+function renderGrid_games() {
+  const grid = document.getElementById('grid');
+  games.forEach(g => {
+    const card = document.createElement('a');
+    card.className = 'game-card-link';
+    card.href = g.url;
+    card.target = '_blank';
+    card.rel = 'noopener';
 
-games.forEach(g => {
-  const card = document.createElement('a');
-  card.className = 'game-card-link';
-  card.href = g.url;
-  card.target = '_blank';
-  card.rel = 'noopener';
+    const discountBadge = g.discount < 0
+      ? `<span class="card-discount-badge">${g.discount}%</span>` : '';
+    const historicBadge = g.historic
+      ? `<span class="card-historic-badge">Mínimo histórico</span>` : '';
+    const priceBlock = (g.discount < 0 && g.priceOld)
+      ? `<span class="price-old">$${g.priceOld.toFixed(2)}</span><span class="price-new">$${g.priceNew.toFixed(2)}</span>`
+      : `<span class="price-new">$${(g.priceNew || 0).toFixed(2)}</span>`;
 
-  card.innerHTML = `
-    <div class="game-card">
-      <div class="card-inner">
-        <img class="card-cover" src="${g.cover}" alt="${g.title}" loading="lazy">
-        <div class="card-title-bar"><h3>${g.title}</h3></div>
-      </div>
-      <div class="expand-panel">
-        <div class="expand-panel-inner">
-          <img class="expand-header-img" src="${g.header}" alt="${g.title}">
-          <p class="expand-desc">${g.desc}</p>
-          <div class="expand-tags">${g.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-          <div class="price-row">
-            <div class="price-info"><span class="price-new">$${g.priceNew.toFixed(2)}</span></div>
-            <span class="btn-steam">Ver en Steam</span>
+    card.innerHTML = `
+      <div class="game-card">
+        <div class="card-inner">
+          ${discountBadge}
+          ${historicBadge}
+          <img class="card-cover" src="${g.cover}" alt="${g.title}" loading="lazy">
+          <div class="card-title-bar"><h3>${g.title}</h3></div>
+        </div>
+        <div class="expand-panel">
+          <div class="expand-panel-inner">
+            <img class="expand-header-img" src="${g.header}" alt="${g.title}">
+            <p class="expand-desc">${g.desc}</p>
+            <div class="expand-tags">${g.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+            <div class="price-row">
+              <div class="price-info">${priceBlock}</div>
+              <span class="btn-steam">Ver en Steam</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  `;
-  grid.appendChild(card);
-});
+    `;
+    grid.appendChild(card);
+  });
+}
+renderGrid_games();
 </script>
+
+<footer class="footer">
+  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal — última actualización 19.06.2026
+</footer>
 
 </body>
 </html>

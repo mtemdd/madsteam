@@ -54,7 +54,7 @@
 <header class="section-header">
   <span class="eyebrow">Zona 03 / El canal</span>
   <h1>Juegos del Stream</h1>
-  <p>Lo que se está jugando en vivo, con su precio actual por si te suma a la partida.</p>
+  <p>Lo que se juega en el canal, con su precio actual.</p>
 </header>
 
 <main class="game-grid" id="grid"></main>
@@ -63,61 +63,52 @@
   <span class="eyebrow">Agenda</span>
   <h1 style="font-size: clamp(24px, 4vw, 36px);">Próximos en stream</h1>
 </header>
-
-<main class="game-grid" id="grid-proximos"></main>
-
-<footer class="footer">
-  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal
-</footer>
+<p style="padding: 0 48px 40px; color: var(--white-dim); font-family: var(--font-body);">
+  Todavía no hay próximos juegos anunciados para el stream.
+</p>
 
 <script>
-// ===== DATOS DE EJEMPLO — esto lo va a generar el script automático =====
-// (En la versión real, esta lista la mantenés vos a mano o el bot la toma de un canal fijo de Discord)
+
 const games = [
   {
-    title: "Minecraft",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1672970/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1672970/header.jpg",
-    desc: "El juego de construcción de siempre — esta semana se está jugando en vivo la expansión de la cúpula de vidrio.",
-    tags: ["En vivo", "Sandbox"],
-    priceOld: 29.99,
-    priceNew: 29.99,
-    discount: 0,
-    historic: false,
-    url: "https://store.steampowered.com/app/1672970"
+    "appid": 1672970,
+    "title": "Minecraft Dungeons",
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1672970/library_600x900.jpg",
+    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1672970/header.jpg?t=1717003107",
+    "desc": "¡Ábrete camino luchando en un juego de aventura y acción emocionante inspirado en los juegos de mazmorras clásicos y ambientado en el universo de Minecraft!",
+    "tags": [
+      "Acción",
+      "Aventura",
+      "Rol"
+    ],
+    "priceOld": 19.99,
+    "priceNew": 19.99,
+    "discount": 0,
+    "historic": false,
+    "url": "https://store.steampowered.com/app/1672970"
   },
   {
-    title: "Stardew Valley",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg",
-    desc: "Stream casual de la granja cooperativa, los domingos a la tarde.",
-    tags: ["En vivo", "Cooperativo"],
-    priceOld: 14.99,
-    priceNew: 7.49,
-    discount: -50,
-    historic: false,
-    url: "https://store.steampowered.com/app/413150"
+    "appid": 413150,
+    "title": "Stardew Valley",
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/library_600x900.jpg",
+    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg?t=1754692865",
+    "desc": "Acabas de heredar la vieja parcela agrícola de tu abuelo de Stardew Valley. Decides partir hacia una nueva vida con unas herramientas usadas y algunas monedas. ¿Te ves capaz de vivir de la tierra y convertir estos campos descuidados en un hogar próspero?",
+    "tags": [
+      "Indie",
+      "Rol",
+      "Simuladores"
+    ],
+    "priceOld": 14.99,
+    "priceNew": 14.99,
+    "discount": 0,
+    "historic": false,
+    "url": "https://store.steampowered.com/app/413150"
   }
 ];
 
-const proximos = [
-  {
-    title: "Cuphead",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/header.jpg",
-    desc: "Anunciado para el próximo stream especial de juegos difíciles.",
-    tags: ["Próximamente"],
-    priceOld: 19.99,
-    priceNew: 5.99,
-    discount: -70,
-    historic: true,
-    url: "https://store.steampowered.com/app/268910"
-  }
-];
-
-function renderGrid(containerId, list) {
-  const grid = document.getElementById(containerId);
-  list.forEach(g => {
+function renderGrid_games() {
+  const grid = document.getElementById('grid');
+  games.forEach(g => {
     const card = document.createElement('a');
     card.className = 'game-card-link';
     card.href = g.url;
@@ -128,9 +119,9 @@ function renderGrid(containerId, list) {
       ? `<span class="card-discount-badge">${g.discount}%</span>` : '';
     const historicBadge = g.historic
       ? `<span class="card-historic-badge">Mínimo histórico</span>` : '';
-    const priceBlock = g.discount < 0
+    const priceBlock = (g.discount < 0 && g.priceOld)
       ? `<span class="price-old">$${g.priceOld.toFixed(2)}</span><span class="price-new">$${g.priceNew.toFixed(2)}</span>`
-      : `<span class="price-new">$${g.priceNew.toFixed(2)}</span>`;
+      : `<span class="price-new">$${(g.priceNew || 0).toFixed(2)}</span>`;
 
     card.innerHTML = `
       <div class="game-card">
@@ -156,10 +147,13 @@ function renderGrid(containerId, list) {
     grid.appendChild(card);
   });
 }
+renderGrid_games();
 
-renderGrid('grid', games);
-renderGrid('grid-proximos', proximos);
 </script>
+
+<footer class="footer">
+  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal — última actualización 19.06.2026
+</footer>
 
 </body>
 </html>

@@ -54,7 +54,7 @@
 <header class="section-header">
   <span class="eyebrow">Zona 02 / Curado para vos</span>
   <h1>Recomendaciones</h1>
-  <p>Basado en tu wishlist y tus gustos: roguelikes, narrativa fuerte y clásicos revisitados. Pasá el mouse para ver detalles.</p>
+  <p>Basado en tus gustos: roguelikes, sandbox, simulación y más.</p>
 </header>
 
 <main class="game-grid" id="grid"></main>
@@ -66,81 +66,13 @@
 
 <main class="game-grid" id="grid-tendencias"></main>
 
-<footer class="footer">
-  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal
-</footer>
-
 <script>
-// ===== DATOS DE EJEMPLO — esto lo va a generar el script automático =====
-const games = [
-  {
-    title: "Hades",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145360/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg",
-    desc: "El roguelike que lo empezó todo. Escapá del inframundo como Zagreus, hijo de Hades, enfrentando a los dioses del Olimpo.",
-    tags: ["Roguelike", "Mitología", "Recomendado"],
-    priceOld: 24.99,
-    priceNew: 9.99,
-    discount: -60,
-    historic: true,
-    url: "https://store.steampowered.com/app/1145360"
-  },
-  {
-    title: "Cuphead",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/header.jpg",
-    desc: "Por tu gusto por la dificultad y el arte clásico, este run and gun es una recomendación directa.",
-    tags: ["Plataformas", "Arte clásico"],
-    priceOld: 19.99,
-    priceNew: 5.99,
-    discount: -70,
-    historic: true,
-    url: "https://store.steampowered.com/app/268910"
-  },
-  {
-    title: "Stardew Valley",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg",
-    desc: "Por las horas que invertís en builds de Minecraft, este simulador de granja con ritmo propio te puede enganchar.",
-    tags: ["Simulación", "Relax"],
-    priceOld: 14.99,
-    priceNew: 7.49,
-    discount: -50,
-    historic: false,
-    url: "https://store.steampowered.com/app/413150"
-  }
-];
 
-const tendencias = [
-  {
-    title: "Red Dead Redemption 2",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg",
-    desc: "Sigue siendo de los juegos más jugados de Steam esta semana, con picos de jugadores concurrentes.",
-    tags: ["Tendencia", "Mundo abierto"],
-    priceOld: 59.99,
-    priceNew: 17.99,
-    discount: -70,
-    historic: false,
-    url: "https://store.steampowered.com/app/1174180"
-  },
-  {
-    title: "DOOM",
-    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/379720/library_600x900.jpg",
-    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/379720/header.jpg",
-    desc: "El reboot de 2016 sigue trayendo jugadores nuevos cada semana gracias a su ritmo y soundtrack.",
-    tags: ["Tendencia", "FPS"],
-    priceOld: 19.99,
-    priceNew: 5.99,
-    discount: -70,
-    historic: false,
-    url: "https://store.steampowered.com/app/379720"
-  }
-];
+const games = [];
 
-function renderGrid(containerId, list) {
-  const grid = document.getElementById(containerId);
-  list.forEach(g => {
+function renderGrid_games() {
+  const grid = document.getElementById('grid');
+  games.forEach(g => {
     const card = document.createElement('a');
     card.className = 'game-card-link';
     card.href = g.url;
@@ -151,9 +83,9 @@ function renderGrid(containerId, list) {
       ? `<span class="card-discount-badge">${g.discount}%</span>` : '';
     const historicBadge = g.historic
       ? `<span class="card-historic-badge">Mínimo histórico</span>` : '';
-    const priceBlock = g.discount < 0
+    const priceBlock = (g.discount < 0 && g.priceOld)
       ? `<span class="price-old">$${g.priceOld.toFixed(2)}</span><span class="price-new">$${g.priceNew.toFixed(2)}</span>`
-      : `<span class="price-new">$${g.priceNew.toFixed(2)}</span>`;
+      : `<span class="price-new">$${(g.priceNew || 0).toFixed(2)}</span>`;
 
     card.innerHTML = `
       <div class="game-card">
@@ -179,10 +111,145 @@ function renderGrid(containerId, list) {
     grid.appendChild(card);
   });
 }
+renderGrid_games();
 
-renderGrid('grid', games);
-renderGrid('grid-tendencias', tendencias);
+
+const tendencias = [
+  {
+    "appid": 730,
+    "title": "Counter-Strike 2",
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/730/library_600x900.jpg",
+    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/730/162664aa5da85f418105350c5d67ca565f6c3713/header.jpg?t=1780435263",
+    "desc": "Durante las dos últimas décadas, Counter‑Strike ha proporcionado una experiencia competitiva de primer nivel para los millones de jugadores de todo el mundo que contribuyeron a darle forma. Ahora el próximo capítulo en la historia de CS está a punto de comenzar. Hablamos de Counter‑Strike 2.",
+    "tags": [
+      "Acción",
+      "Free to Play"
+    ],
+    "priceOld": 0,
+    "priceNew": 0,
+    "discount": 0,
+    "historic": false,
+    "url": "https://store.steampowered.com/app/730",
+    "players": 1068845
+  },
+  {
+    "appid": 570,
+    "title": "Dota 2",
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/570/library_600x900.jpg",
+    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/570/header.jpg?t=1769535998",
+    "desc": "Cada día, millones de jugadores de todo el mundo entran en batalla como uno de los más de cien héroes de Dota. Y no importa si es su décima hora de juego o la milésima, siempre hay algo nuevo que descubrir.",
+    "tags": [
+      "Acción",
+      "Estrategia",
+      "Free to Play"
+    ],
+    "priceOld": 0,
+    "priceNew": 0,
+    "discount": 0,
+    "historic": false,
+    "url": "https://store.steampowered.com/app/570",
+    "players": 555116
+  },
+  {
+    "appid": 1245620,
+    "title": "ELDEN RING",
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1245620/library_600x900.jpg",
+    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg?t=1767883716",
+    "desc": "EL NUEVO JUEGO DE ROL Y ACCIÓN DE AMBIENTACIÓN FANTÁSTICA. Álzate, Sinluz, y que la gracia te guíe para abrazar el poder del Círculo de Elden y encumbrarte como señor del Círculo en las Tierras Intermedias.",
+    "tags": [
+      "Acción",
+      "Rol"
+    ],
+    "priceOld": 59.99,
+    "priceNew": 51.59,
+    "discount": -14,
+    "historic": false,
+    "url": "https://store.steampowered.com/app/1245620",
+    "players": 35265
+  },
+  {
+    "appid": 1174180,
+    "title": "Red Dead Redemption 2",
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900.jpg",
+    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg?t=1759502961",
+    "desc": "Arthur Morgan y la banda de Van der Linde se ven obligados a huir. Con agentes federales y cazarrecompensas pisándoles los talones, la banda deberá atracar, robar y luchar para sobrevivir en su camino por el escabroso territorio.",
+    "tags": [
+      "Acción",
+      "Aventura"
+    ],
+    "priceOld": 59.99,
+    "priceNew": 14.99,
+    "discount": -75,
+    "historic": false,
+    "url": "https://store.steampowered.com/app/1174180",
+    "players": 24741
+  },
+  {
+    "appid": 379720,
+    "title": "DOOM",
+    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/379720/library_600x900.jpg",
+    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/379720/header.jpg?t=1750784856",
+    "desc": "Ahora incluye los tres paquetes de contenido descargable premium (Unto the Evil-Hell Followed-Bloodfall), mapas, modos y armas, así como todas las actualizaciones de funcionalidades, como el modo Arcade, el modo Foto y la actualización 6.66, la más reciente, que trae más mejoras multijugador.",
+    "tags": [
+      "Acción"
+    ],
+    "priceOld": 19.99,
+    "priceNew": 3.99,
+    "discount": -80,
+    "historic": false,
+    "url": "https://store.steampowered.com/app/379720",
+    "players": 848
+  }
+];
+
+function renderGrid_tendencias() {
+  const grid = document.getElementById('grid-tendencias');
+  tendencias.forEach(g => {
+    const card = document.createElement('a');
+    card.className = 'game-card-link';
+    card.href = g.url;
+    card.target = '_blank';
+    card.rel = 'noopener';
+
+    const discountBadge = g.discount < 0
+      ? `<span class="card-discount-badge">${g.discount}%</span>` : '';
+    const historicBadge = g.historic
+      ? `<span class="card-historic-badge">Mínimo histórico</span>` : '';
+    const priceBlock = (g.discount < 0 && g.priceOld)
+      ? `<span class="price-old">$${g.priceOld.toFixed(2)}</span><span class="price-new">$${g.priceNew.toFixed(2)}</span>`
+      : `<span class="price-new">$${(g.priceNew || 0).toFixed(2)}</span>`;
+
+    card.innerHTML = `
+      <div class="game-card">
+        <div class="card-inner">
+          ${discountBadge}
+          ${historicBadge}
+          <img class="card-cover" src="${g.cover}" alt="${g.title}" loading="lazy">
+          <div class="card-title-bar"><h3>${g.title}</h3></div>
+        </div>
+        <div class="expand-panel">
+          <div class="expand-panel-inner">
+            <img class="expand-header-img" src="${g.header}" alt="${g.title}">
+            <p class="expand-desc">${g.desc}</p>
+            <div class="expand-tags">${g.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+            <div class="price-row">
+              <div class="price-info">${priceBlock}</div>
+              <span class="btn-steam">Ver en Steam</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+renderGrid_tendencias();
+
 </script>
+
+<footer class="footer">
+  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal — última actualización 19.06.2026
+</footer>
 
 </body>
 </html>
