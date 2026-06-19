@@ -154,8 +154,17 @@ def build_recomendaciones_html(recommendations, trending):
 
 def build_stream_html(stream_games, upcoming_stream_games=None):
     upcoming_stream_games = upcoming_stream_games or []
-    script1 = _render_grid_script('games', 'grid', stream_games)
-    body = f'<main class="game-grid" id="grid"></main>\n'
+
+    if stream_games:
+        script1 = _render_grid_script('games', 'grid', stream_games)
+        body = f'<main class="game-grid" id="grid"></main>\n'
+        games_script = f"<script>\n{script1}\n"
+    else:
+        body = '''<p style="padding: 0 48px 40px; color: var(--white-dim); font-family: var(--font-body);">
+  Todavía no hay juegos cargados para esta sección.
+</p>
+'''
+        games_script = "<script>\n"
 
     if upcoming_stream_games:
         script2 = _render_grid_script('proximos', 'grid-proximos', upcoming_stream_games)
@@ -167,9 +176,7 @@ def build_stream_html(stream_games, upcoming_stream_games=None):
 
 <main class="game-grid" id="grid-proximos"></main>
 
-<script>
-{script1}
-{script2}
+{games_script}{script2}
 </script>"""
     else:
         body += f"""
@@ -181,8 +188,7 @@ def build_stream_html(stream_games, upcoming_stream_games=None):
   Todavía no hay próximos juegos anunciados para el stream.
 </p>
 
-<script>
-{script1}
+{games_script}
 </script>"""
 
     return build_page_shell(
