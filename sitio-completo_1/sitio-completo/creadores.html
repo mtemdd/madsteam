@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ofertas de Creadores — MADSTEAM</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="brand"><span class="mad">MAD</span><span class="steam">STEAM</span></a>
+  <ul class="nav-links">
+    <li class="nav-item">
+      <a href="index.html" class="">Ofertas <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="index.html">Descuentos generales</a>
+        <a href="minimos-historicos.html">Mínimos históricos</a>
+        <a href="proximas-joyitas.html">Próximas joyitas</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="recomendaciones.html" class="">Recomendaciones <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="recomendaciones.html">Para vos</a>
+        <a href="recomendaciones.html#tendencias">Juegos en tendencia</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="stream.html" class="">Juegos del Stream <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="stream.html">En el canal ahora</a>
+        <a href="stream.html#proximos">Próximos en stream</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="creadores.html" class="active">Ofertas de Creadores <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="creadores.html">Por empresa</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <span class="nav-meta">ACTUALIZADO 19.06.2026</span>
+</nav>
+
+<header class="section-header">
+  <span class="eyebrow">Zona 04 / Editores y estudios</span>
+  <h1>Ofertas de Creadores</h1>
+  <p>Descuentos agrupados por empresa. Tocá el logo para ver todo el catálogo de la editora en Steam, o un juego para ir directo a su oferta.</p>
+</header>
+
+<main id="publishers"></main>
+
+<footer class="footer">
+  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal
+</footer>
+
+<script>
+// ===== DATOS DE EJEMPLO — esto lo va a generar el script automático =====
+const publishers = [
+  {
+    name: "Square Enix",
+    logo: "https://cdn.cloudflare.steamstatic.com/steam/publishers/Square_Enix_Logo.png",
+    storeUrl: "https://store.steampowered.com/publisher/SquareEnix",
+    games: [
+      {
+        title: "Final Fantasy XVI",
+        cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2738000/library_600x900.jpg",
+        header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2738000/header.jpg",
+        desc: "Clive Rosfield emprende un viaje de venganza en un mundo regido por Cristales y los Eikons que los habitan.",
+        tags: ["RPG", "Acción", "Historia"],
+        priceOld: 69.99,
+        priceNew: 34.99,
+        discount: -50,
+        historic: true,
+        url: "https://store.steampowered.com/app/2738000"
+      },
+      {
+        title: "Final Fantasy XIV Online",
+        cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/39210/library_600x900.jpg",
+        header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/39210/header.jpg",
+        desc: "El MMORPG aclamado por la crítica. Explorá Eorzea junto a millones de jugadores en una de las mejores historias del género.",
+        tags: ["MMORPG", "Online", "Fantasía"],
+        priceOld: 19.99,
+        priceNew: 9.99,
+        discount: -50,
+        historic: false,
+        url: "https://store.steampowered.com/app/39210"
+      },
+      {
+        title: "Final Fantasy VII",
+        cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/39140/library_600x900.jpg",
+        header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/39140/header.jpg",
+        desc: "El clásico que redefinió los JRPG. Cloud Strife y AVALANCHE contra la megacorporación Shinra.",
+        tags: ["JRPG", "Clásico", "Historia"],
+        priceOld: 15.99,
+        priceNew: 3.99,
+        discount: -75,
+        historic: true,
+        url: "https://store.steampowered.com/app/39140"
+      }
+    ]
+  },
+  {
+    name: "id Software / Bethesda",
+    logo: "https://cdn.cloudflare.steamstatic.com/steam/publishers/Bethesda_Logo.png",
+    storeUrl: "https://store.steampowered.com/publisher/bethesda",
+    games: [
+      {
+        title: "DOOM Eternal",
+        cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/782330/library_600x900.jpg",
+        header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/782330/header.jpg",
+        desc: "El Doom Slayer regresa para enfrentar a las fuerzas del infierno en la Tierra. Acción brutal y sin pausas.",
+        tags: ["FPS", "Acción", "Demonios"],
+        priceOld: 39.99,
+        priceNew: 9.99,
+        discount: -75,
+        historic: true,
+        url: "https://store.steampowered.com/app/782330"
+      }
+    ]
+  }
+];
+
+const container = document.getElementById('publishers');
+
+publishers.forEach(pub => {
+  const block = document.createElement('section');
+  block.className = 'publisher-block';
+
+  const cardsHtml = pub.games.map(g => {
+    const discountBadge = g.discount < 0
+      ? `<span class="card-discount-badge">${g.discount}%</span>` : '';
+    const historicBadge = g.historic
+      ? `<span class="card-historic-badge">Mínimo histórico</span>` : '';
+    const priceBlock = g.discount < 0
+      ? `<span class="price-old">$${g.priceOld.toFixed(2)}</span><span class="price-new">$${g.priceNew.toFixed(2)}</span>`
+      : `<span class="price-new">$${g.priceNew.toFixed(2)}</span>`;
+
+    return `
+      <a class="game-card-link" href="${g.url}" target="_blank" rel="noopener">
+        <div class="game-card">
+          <div class="card-inner">
+            ${discountBadge}
+            ${historicBadge}
+            <img class="card-cover" src="${g.cover}" alt="${g.title}" loading="lazy">
+            <div class="card-title-bar"><h3>${g.title}</h3></div>
+          </div>
+          <div class="expand-panel">
+            <div class="expand-panel-inner">
+              <img class="expand-header-img" src="${g.header}" alt="${g.title}">
+              <p class="expand-desc">${g.desc}</p>
+              <div class="expand-tags">${g.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+              <div class="price-row">
+                <div class="price-info">${priceBlock}</div>
+                <span class="btn-steam">Ver en Steam</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    `;
+  }).join('');
+
+  block.innerHTML = `
+    <div class="publisher-header">
+      <a class="publisher-logo-link" href="${pub.storeUrl}" target="_blank" rel="noopener">
+        <img src="${pub.logo}" alt="${pub.name}">
+      </a>
+      <div class="publisher-info">
+        <h2>${pub.name}</h2>
+        <p>${pub.games.length} juegos en oferta — tocá el logo para ver todo el catálogo</p>
+      </div>
+    </div>
+    <div class="publisher-grid">${cardsHtml}</div>
+  `;
+  container.appendChild(block);
+});
+</script>
+
+</body>
+</html>
