@@ -18,7 +18,8 @@ import curators
 import html_builder
 
 # Carpeta raíz del sitio (donde están index.html, styles.css, etc.)
-SITE_DIR = os.path.join(os.path.dirname(__file__), "..", "sitio-completo")
+# Los HTML viven en la raíz del repositorio, junto a este script en bot/
+SITE_DIR = os.path.join(os.path.dirname(__file__), "..")
 
 # Pool de candidatos para "Próximas Joyitas" — lista curada a mano,
 # ya que no hay forma 100% automática de saber "lo nuevo y bueno" sin
