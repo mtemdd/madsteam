@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juegos del Stream — MADSTEAM</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="brand"><span class="mad">MAD</span><span class="steam">STEAM</span></a>
+  <ul class="nav-links">
+    <li class="nav-item">
+      <a href="index.html" class="">Ofertas <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="index.html">Descuentos generales</a>
+        <a href="minimos-historicos.html">Mínimos históricos</a>
+        <a href="proximas-joyitas.html">Próximas joyitas</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="recomendaciones.html" class="">Recomendaciones <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="recomendaciones.html">Para vos</a>
+        <a href="recomendaciones.html#tendencias">Juegos en tendencia</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="stream.html" class="active">Juegos del Stream <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="stream.html">En el canal ahora</a>
+        <a href="stream.html#proximos">Próximos en stream</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="creadores.html" class="">Ofertas de Creadores <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="creadores.html">Por empresa</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <span class="nav-meta">ACTUALIZADO 19.06.2026</span>
+</nav>
+
+<header class="section-header">
+  <span class="eyebrow">Zona 03 / El canal</span>
+  <h1>Juegos del Stream</h1>
+  <p>Lo que se está jugando en vivo, con su precio actual por si te suma a la partida.</p>
+</header>
+
+<main class="game-grid" id="grid"></main>
+
+<header class="section-header" id="proximos" style="padding-top: 0;">
+  <span class="eyebrow">Agenda</span>
+  <h1 style="font-size: clamp(24px, 4vw, 36px);">Próximos en stream</h1>
+</header>
+
+<main class="game-grid" id="grid-proximos"></main>
+
+<footer class="footer">
+  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal
+</footer>
+
+<script>
+// ===== DATOS DE EJEMPLO — esto lo va a generar el script automático =====
+// (En la versión real, esta lista la mantenés vos a mano o el bot la toma de un canal fijo de Discord)
+const games = [
+  {
+    title: "Minecraft",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1672970/library_600x900.jpg",
+    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1672970/header.jpg",
+    desc: "El juego de construcción de siempre — esta semana se está jugando en vivo la expansión de la cúpula de vidrio.",
+    tags: ["En vivo", "Sandbox"],
+    priceOld: 29.99,
+    priceNew: 29.99,
+    discount: 0,
+    historic: false,
+    url: "https://store.steampowered.com/app/1672970"
+  },
+  {
+    title: "Stardew Valley",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/library_600x900.jpg",
+    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg",
+    desc: "Stream casual de la granja cooperativa, los domingos a la tarde.",
+    tags: ["En vivo", "Cooperativo"],
+    priceOld: 14.99,
+    priceNew: 7.49,
+    discount: -50,
+    historic: false,
+    url: "https://store.steampowered.com/app/413150"
+  }
+];
+
+const proximos = [
+  {
+    title: "Cuphead",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/library_600x900.jpg",
+    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/header.jpg",
+    desc: "Anunciado para el próximo stream especial de juegos difíciles.",
+    tags: ["Próximamente"],
+    priceOld: 19.99,
+    priceNew: 5.99,
+    discount: -70,
+    historic: true,
+    url: "https://store.steampowered.com/app/268910"
+  }
+];
+
+function renderGrid(containerId, list) {
+  const grid = document.getElementById(containerId);
+  list.forEach(g => {
+    const card = document.createElement('a');
+    card.className = 'game-card-link';
+    card.href = g.url;
+    card.target = '_blank';
+    card.rel = 'noopener';
+
+    const discountBadge = g.discount < 0
+      ? `<span class="card-discount-badge">${g.discount}%</span>` : '';
+    const historicBadge = g.historic
+      ? `<span class="card-historic-badge">Mínimo histórico</span>` : '';
+    const priceBlock = g.discount < 0
+      ? `<span class="price-old">$${g.priceOld.toFixed(2)}</span><span class="price-new">$${g.priceNew.toFixed(2)}</span>`
+      : `<span class="price-new">$${g.priceNew.toFixed(2)}</span>`;
+
+    card.innerHTML = `
+      <div class="game-card">
+        <div class="card-inner">
+          ${discountBadge}
+          ${historicBadge}
+          <img class="card-cover" src="${g.cover}" alt="${g.title}" loading="lazy">
+          <div class="card-title-bar"><h3>${g.title}</h3></div>
+        </div>
+        <div class="expand-panel">
+          <div class="expand-panel-inner">
+            <img class="expand-header-img" src="${g.header}" alt="${g.title}">
+            <p class="expand-desc">${g.desc}</p>
+            <div class="expand-tags">${g.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+            <div class="price-row">
+              <div class="price-info">${priceBlock}</div>
+              <span class="btn-steam">Ver en Steam</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+renderGrid('grid', games);
+renderGrid('grid-proximos', proximos);
+</script>
+
+</body>
+</html>

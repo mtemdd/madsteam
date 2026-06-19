@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recomendaciones — MADSTEAM</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="brand"><span class="mad">MAD</span><span class="steam">STEAM</span></a>
+  <ul class="nav-links">
+    <li class="nav-item">
+      <a href="index.html" class="">Ofertas <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="index.html">Descuentos generales</a>
+        <a href="minimos-historicos.html">Mínimos históricos</a>
+        <a href="proximas-joyitas.html">Próximas joyitas</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="recomendaciones.html" class="active">Recomendaciones <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="recomendaciones.html">Para vos</a>
+        <a href="recomendaciones.html#tendencias">Juegos en tendencia</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="stream.html" class="">Juegos del Stream <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="stream.html">En el canal ahora</a>
+        <a href="stream.html#proximos">Próximos en stream</a>
+        </div>
+      </div>
+    </li>
+    <li class="nav-item">
+      <a href="creadores.html" class="">Ofertas de Creadores <span class="nav-caret">▾</span></a>
+      <div class="nav-dropdown">
+        <div class="nav-dropdown-inner">
+        <a href="creadores.html">Por empresa</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <span class="nav-meta">ACTUALIZADO 19.06.2026</span>
+</nav>
+
+<header class="section-header">
+  <span class="eyebrow">Zona 02 / Curado para vos</span>
+  <h1>Recomendaciones</h1>
+  <p>Basado en tu wishlist y tus gustos: roguelikes, narrativa fuerte y clásicos revisitados. Pasá el mouse para ver detalles.</p>
+</header>
+
+<main class="game-grid" id="grid"></main>
+
+<header class="section-header" id="tendencias" style="padding-top: 0;">
+  <span class="eyebrow">En tendencia</span>
+  <h1 style="font-size: clamp(24px, 4vw, 36px);">Lo que está jugando todo el mundo</h1>
+</header>
+
+<main class="game-grid" id="grid-tendencias"></main>
+
+<footer class="footer">
+  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal
+</footer>
+
+<script>
+// ===== DATOS DE EJEMPLO — esto lo va a generar el script automático =====
+const games = [
+  {
+    title: "Hades",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145360/library_600x900.jpg",
+    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg",
+    desc: "El roguelike que lo empezó todo. Escapá del inframundo como Zagreus, hijo de Hades, enfrentando a los dioses del Olimpo.",
+    tags: ["Roguelike", "Mitología", "Recomendado"],
+    priceOld: 24.99,
+    priceNew: 9.99,
+    discount: -60,
+    historic: true,
+    url: "https://store.steampowered.com/app/1145360"
+  },
+  {
+    title: "Cuphead",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/library_600x900.jpg",
+    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/268910/header.jpg",
+    desc: "Por tu gusto por la dificultad y el arte clásico, este run and gun es una recomendación directa.",
+    tags: ["Plataformas", "Arte clásico"],
+    priceOld: 19.99,
+    priceNew: 5.99,
+    discount: -70,
+    historic: true,
+    url: "https://store.steampowered.com/app/268910"
+  },
+  {
+    title: "Stardew Valley",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/library_600x900.jpg",
+    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg",
+    desc: "Por las horas que invertís en builds de Minecraft, este simulador de granja con ritmo propio te puede enganchar.",
+    tags: ["Simulación", "Relax"],
+    priceOld: 14.99,
+    priceNew: 7.49,
+    discount: -50,
+    historic: false,
+    url: "https://store.steampowered.com/app/413150"
+  }
+];
+
+const tendencias = [
+  {
+    title: "Red Dead Redemption 2",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900.jpg",
+    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg",
+    desc: "Sigue siendo de los juegos más jugados de Steam esta semana, con picos de jugadores concurrentes.",
+    tags: ["Tendencia", "Mundo abierto"],
+    priceOld: 59.99,
+    priceNew: 17.99,
+    discount: -70,
+    historic: false,
+    url: "https://store.steampowered.com/app/1174180"
+  },
+  {
+    title: "DOOM",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/379720/library_600x900.jpg",
+    header: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/379720/header.jpg",
+    desc: "El reboot de 2016 sigue trayendo jugadores nuevos cada semana gracias a su ritmo y soundtrack.",
+    tags: ["Tendencia", "FPS"],
+    priceOld: 19.99,
+    priceNew: 5.99,
+    discount: -70,
+    historic: false,
+    url: "https://store.steampowered.com/app/379720"
+  }
+];
+
+function renderGrid(containerId, list) {
+  const grid = document.getElementById(containerId);
+  list.forEach(g => {
+    const card = document.createElement('a');
+    card.className = 'game-card-link';
+    card.href = g.url;
+    card.target = '_blank';
+    card.rel = 'noopener';
+
+    const discountBadge = g.discount < 0
+      ? `<span class="card-discount-badge">${g.discount}%</span>` : '';
+    const historicBadge = g.historic
+      ? `<span class="card-historic-badge">Mínimo histórico</span>` : '';
+    const priceBlock = g.discount < 0
+      ? `<span class="price-old">$${g.priceOld.toFixed(2)}</span><span class="price-new">$${g.priceNew.toFixed(2)}</span>`
+      : `<span class="price-new">$${g.priceNew.toFixed(2)}</span>`;
+
+    card.innerHTML = `
+      <div class="game-card">
+        <div class="card-inner">
+          ${discountBadge}
+          ${historicBadge}
+          <img class="card-cover" src="${g.cover}" alt="${g.title}" loading="lazy">
+          <div class="card-title-bar"><h3>${g.title}</h3></div>
+        </div>
+        <div class="expand-panel">
+          <div class="expand-panel-inner">
+            <img class="expand-header-img" src="${g.header}" alt="${g.title}">
+            <p class="expand-desc">${g.desc}</p>
+            <div class="expand-tags">${g.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+            <div class="price-row">
+              <div class="price-info">${priceBlock}</div>
+              <span class="btn-steam">Ver en Steam</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+renderGrid('grid', games);
+renderGrid('grid-tendencias', tendencias);
+</script>
+
+</body>
+</html>
