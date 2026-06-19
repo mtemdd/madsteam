@@ -104,14 +104,24 @@ def itad_gid_to_appid(gids):
     Resuelve gids de ITAD a Steam appids usando el lookup inverso
     /lookup/shop/{shopId}/id/v1 (shopId 61 = Steam).
     Devuelve dict {gid: appid}.
+
+    La API puede devolver, para cada gid, ya sea un string único
+    ("app/12345") o una lista de strings (["app/12345"]) -- se
+    manejan ambos casos.
     """
     if not gids:
         return {}
     data = _itad_post("/lookup/shop/61/id/v1", list(gids))
     out = {}
-    for gid, shop_id in data.items():
-        if shop_id and shop_id.startswith("app/"):
-            out[gid] = int(shop_id.replace("app/", ""))
+    for gid, shop_id_raw in data.items():
+        shop_id = shop_id_raw
+        if isinstance(shop_id_raw, list):
+            shop_id = shop_id_raw[0] if shop_id_raw else None
+        if shop_id and isinstance(shop_id, str) and shop_id.startswith("app/"):
+            try:
+                out[gid] = int(shop_id.replace("app/", ""))
+            except ValueError:
+                continue
     return out
 
 
