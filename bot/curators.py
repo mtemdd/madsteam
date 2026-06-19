@@ -10,10 +10,10 @@ import data_sources as ds
 
 # Lista fija de juegos del stream — Mate la actualiza acá cuando cambia.
 # Formato: appid de Steam (se puede sacar de la URL de la tienda).
-STREAM_GAMES_APPIDS = [
-    1672970,   # Minecraft (placeholder, reemplazar con la lista real de Mate)
-    413150,    # Stardew Valley
-]
+# Lista fija de juegos del stream — Mate la actualiza acá cuando cambia.
+# Formato: appid de Steam (se puede sacar de la URL de la tienda).
+# VACÍA por ahora -- esperando la lista real de Mate.
+STREAM_GAMES_APPIDS = []
 
 # Lista fija de juegos ANUNCIADOS para futuros streams (agenda).
 # Mate la actualiza acá cuando anuncia algo nuevo. Puede quedar vacía.
@@ -34,12 +34,12 @@ WISHLIST_APPIDS = {
 GENEROS_PREFERIDOS = ["Roguelike", "Sandbox", "Simulation", "Action", "Adventure"]
 
 
-def build_general_offers(max_items=12):
+def build_general_offers(max_items=20):
     """
     Ofertas Generales: juegos en descuento (cualquier %) que cumplen
     el filtro de calidad (reseñas Muy positivas o mejor).
     """
-    deals = ds.itad_current_deals(limit=100)
+    deals = ds.itad_current_deals(limit=250)
     gids = [d["gid"] for d in deals]
     appid_map = ds.itad_gid_to_appid(gids)
 
@@ -60,12 +60,12 @@ def build_general_offers(max_items=12):
     return results
 
 
-def build_historic_lows(max_items=12):
+def build_historic_lows(max_items=20):
     """
     Mínimos Históricos: juego en su precio más bajo histórico + reseñas
     Muy positivas o mejor.
     """
-    deals = ds.itad_current_deals(limit=150)
+    deals = ds.itad_current_deals(limit=250)
     gids = [d["gid"] for d in deals]
     overview = ds.itad_price_overview(gids)
     appid_map = ds.itad_gid_to_appid(gids)
@@ -91,7 +91,7 @@ def build_historic_lows(max_items=12):
     return results
 
 
-def build_upcoming_gems(candidate_appids, max_items=8):
+def build_upcoming_gems(candidate_appids, max_items=20):
     """
     Próximas Joyitas: lanzamientos recientes con muy buenas reseñas,
     con o sin descuento. candidate_appids es una lista que se arma
@@ -121,12 +121,12 @@ def build_upcoming_gems(candidate_appids, max_items=8):
     return results
 
 
-def build_recommendations(max_items=8):
+def build_recommendations(max_items=20):
     """
     Recomendaciones: juegos en oferta que matchean los géneros/gustos
     conocidos de Mate.
     """
-    deals = ds.itad_current_deals(limit=150)
+    deals = ds.itad_current_deals(limit=250)
     gids = [d["gid"] for d in deals]
     appid_map = ds.itad_gid_to_appid(gids)
 
@@ -149,7 +149,7 @@ def build_recommendations(max_items=8):
     return results
 
 
-def build_trending(candidate_appids, max_items=6):
+def build_trending(candidate_appids, max_items=20):
     """
     Tendencias: ordenado por jugadores concurrentes ahora mismo.
     candidate_appids: pool de juegos populares sobre los que medimos
