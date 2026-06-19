@@ -65,25 +65,34 @@ def itad_current_deals(limit=200, offset=0):
     Trae el listado de ofertas activas en Steam según ITAD.
     Devuelve lista de dicts: gid, title, precio actual, precio original, %descuento, url.
     NOTA: este endpoint NO devuelve el Steam appid directo; para conseguirlo
-    hay que usar /lookup/shop/{shopId}/id/v1 en sentido inverso, o resolverlo
-    a partir del slug/título con games/search si hace falta mostrar imágenes.
+    hay que usar /lookup/shop/{shopId}/id/v1 en sentido inverso.
+
+    El parámetro 'shops' espera una lista de IDs numéricos de tienda.
+    61 = Steam dentro del catálogo de tiendas de ITAD.
     """
-    params = {
-        "country": "AR",
-        "shop": "steam",
-        "limit": limit,
+    body = {
+        "country": "US",
         "offset": offset,
+        "limit": limit,
+        "shops": [61],
         "sort": "-cut",
     }
-    data = _itad_get("/deals/v2", params)
+    r = requests.post(
+        f"{ITAD_BASE}/deals/v2",
+        params={"key": ITAD_API_KEY},
+        json=body,
+        timeout=20,
+    )
+    r.raise_for_status()
+    data = r.json()
     results = []
     for item in data.get("list", []):
         deal = item.get("deal", {})
         results.append({
             "gid": item.get("id"),
             "title": item.get("title"),
-            "price_new": deal.get("price", {}).get("amount"),
-            "price_old": deal.get("regular", {}).get("amount"),
+            "price_new": (deal.get("price") or {}).get("amount"),
+            "price_old": (deal.get("regular") or {}).get("amount"),
             "discount": deal.get("cut"),
             "url": deal.get("url"),
         })
@@ -112,7 +121,7 @@ def itad_price_overview(gids):
     """
     if not gids:
         return {}
-    data = _itad_post("/games/overview/v2", list(gids), params={"country": "AR"})
+    data = _itad_post("/games/overview/v2", list(gids), params={"country": "US"})
     out = {}
     for entry in data.get("prices", []):
         gid = entry.get("id")
