@@ -27,6 +27,14 @@ SITE_DIR = os.path.join(os.path.dirname(__file__), "..")
 UPCOMING_CANDIDATES_APPIDS = [
     2592160,   # Dispatch
     1030300,   # Hollow Knight: Silksong
+    2767030,   # Marvel Rivals
+    2050650,   # Resident Evil Requiem
+    1888160,   # Clair Obscur: Expedition 33
+    2379780,   # Balatro (DLC/expansiones)
+    1933980,   # Split Fiction
+    1903340,   # Monster Hunter Wilds
+    2358720,   # Black Myth: Wukong
+    1245620,   # Elden Ring (Shadow of the Erdtree referencia)
 ]
 
 # Pool de candidatos para medir tendencias (jugadores concurrentes)
@@ -36,6 +44,21 @@ TRENDING_CANDIDATES_APPIDS = [
     730,       # CS2
     570,       # Dota 2
     1245620,   # Elden Ring
+    1091500,   # Cyberpunk 2077
+    1086940,   # Baldur's Gate 3
+    271590,    # GTA V
+    1938090,   # Call of Duty
+    578080,    # PUBG
+    252490,    # Rust
+    1599340,   # Lost Ark
+    1203220,   # NARAKA: BLADEPOINT
+    1172470,   # Apex Legends
+    359550,    # Rainbow Six Siege
+    1085660,   # Destiny 2
+    230410,    # Warframe
+    582010,    # Monster Hunter World
+    1593500,   # God of War
+    1888930,   # The Last of Us Part I
 ]
 
 # Editoras candidatas a chequear para "Ofertas de Creadores"
