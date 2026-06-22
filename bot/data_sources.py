@@ -60,29 +60,21 @@ def itad_lookup_many_by_appid(appids):
     return out
 
 
-def itad_current_deals(limit=200, offset=0):
+def itad_current_deals(limit=100, offset=0):
     """
     Trae el listado de ofertas activas en Steam según ITAD.
-    Devuelve lista de dicts: gid, title, precio actual, precio original, %descuento, url.
-    NOTA: este endpoint NO devuelve el Steam appid directo; para conseguirlo
-    hay que usar /lookup/shop/{shopId}/id/v1 en sentido inverso.
-
-    El parámetro 'shops' espera una lista de IDs numéricos de tienda.
-    61 = Steam dentro del catálogo de tiendas de ITAD.
+    Este endpoint es GET con parámetros en query string (no POST).
+    Límite máximo por página: 100. Para más resultados usar paginación con offset.
     """
-    body = {
+    params = {
+        "key": ITAD_API_KEY,
         "country": "US",
         "offset": offset,
-        "limit": limit,
-        "shops": [61],
+        "limit": min(limit, 100),
+        "shops": 61,
         "sort": "-cut",
     }
-    r = requests.post(
-        f"{ITAD_BASE}/deals/v2",
-        params={"key": ITAD_API_KEY},
-        json=body,
-        timeout=20,
-    )
+    r = requests.get(f"{ITAD_BASE}/deals/v2", params=params, timeout=30)
     r.raise_for_status()
     data = r.json()
     results = []
