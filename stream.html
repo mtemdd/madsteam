@@ -57,7 +57,9 @@
   <p>Lo que se juega en el canal, con su precio actual.</p>
 </header>
 
-<main class="game-grid" id="grid"></main>
+<p style="padding: 0 48px 40px; color: var(--white-dim); font-family: var(--font-body);">
+  Todavía no hay juegos cargados para esta sección.
+</p>
 
 <header class="section-header" id="proximos" style="padding-top: 0;">
   <span class="eyebrow">Agenda</span>
@@ -69,90 +71,10 @@
 
 <script>
 
-const games = [
-  {
-    "appid": 1672970,
-    "title": "Minecraft Dungeons",
-    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1672970/library_600x900.jpg",
-    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1672970/header.jpg?t=1717003107",
-    "desc": "¡Ábrete camino luchando en un juego de aventura y acción emocionante inspirado en los juegos de mazmorras clásicos y ambientado en el universo de Minecraft!",
-    "tags": [
-      "Acción",
-      "Aventura",
-      "Rol"
-    ],
-    "priceOld": 19.99,
-    "priceNew": 19.99,
-    "discount": 0,
-    "historic": false,
-    "url": "https://store.steampowered.com/app/1672970"
-  },
-  {
-    "appid": 413150,
-    "title": "Stardew Valley",
-    "cover": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/413150/library_600x900.jpg",
-    "header": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg?t=1754692865",
-    "desc": "Acabas de heredar la vieja parcela agrícola de tu abuelo de Stardew Valley. Decides partir hacia una nueva vida con unas herramientas usadas y algunas monedas. ¿Te ves capaz de vivir de la tierra y convertir estos campos descuidados en un hogar próspero?",
-    "tags": [
-      "Indie",
-      "Rol",
-      "Simuladores"
-    ],
-    "priceOld": 14.99,
-    "priceNew": 14.99,
-    "discount": 0,
-    "historic": false,
-    "url": "https://store.steampowered.com/app/413150"
-  }
-];
-
-function renderGrid_games() {
-  const grid = document.getElementById('grid');
-  games.forEach(g => {
-    const card = document.createElement('a');
-    card.className = 'game-card-link';
-    card.href = g.url;
-    card.target = '_blank';
-    card.rel = 'noopener';
-
-    const discountBadge = g.discount < 0
-      ? `<span class="card-discount-badge">${g.discount}%</span>` : '';
-    const historicBadge = g.historic
-      ? `<span class="card-historic-badge">Mínimo histórico</span>` : '';
-    const priceBlock = (g.discount < 0 && g.priceOld)
-      ? `<span class="price-old">$${g.priceOld.toFixed(2)}</span><span class="price-new">$${g.priceNew.toFixed(2)}</span>`
-      : `<span class="price-new">$${(g.priceNew || 0).toFixed(2)}</span>`;
-
-    card.innerHTML = `
-      <div class="game-card">
-        <div class="card-inner">
-          ${discountBadge}
-          ${historicBadge}
-          <img class="card-cover" src="${g.cover}" alt="${g.title}" loading="lazy">
-          <div class="card-title-bar"><h3>${g.title}</h3></div>
-        </div>
-        <div class="expand-panel">
-          <div class="expand-panel-inner">
-            <img class="expand-header-img" src="${g.header}" alt="${g.title}">
-            <p class="expand-desc">${g.desc}</p>
-            <div class="expand-tags">${g.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-            <div class="price-row">
-              <div class="price-info">${priceBlock}</div>
-              <span class="btn-steam">Ver en Steam</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-}
-renderGrid_games();
-
 </script>
 
 <footer class="footer">
-  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal — última actualización 19.06.2026
+  Datos actualizados automáticamente — fuente: Steam &amp; IsThereAnyDeal — última actualización 22.06.2026
 </footer>
 
 </body>
